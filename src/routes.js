@@ -1,12 +1,12 @@
-import { Queue } from 'bullmq';
-import csvParser from 'csv-parser';
-import { Router } from 'express';
-import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
-import Image from './models/Image';
-import multerConfig from './multerConfig';
+const { Queue } = require('bullmq');
+const csvParser = require('csv-parser');
+const { Router } = require('express');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+const { Readable } = require('stream');
 
-import { Readable } from 'stream';
+const Image = require('./models/Image');
+const multerConfig = require('./multerConfig');
 
 const router = Router();
 const upload = multer(multerConfig);
@@ -50,4 +50,4 @@ router.get('/status/:requestId', async (req, res) => {
   res.json(data);
 });
 
-export default router;
+module.exports = router;

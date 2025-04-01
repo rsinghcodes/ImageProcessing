@@ -1,5 +1,5 @@
-import app from './app';
-import connect from './db';
+const app = require('./app');
+const connect = require('./db');
 
 const PORT = 3000;
 

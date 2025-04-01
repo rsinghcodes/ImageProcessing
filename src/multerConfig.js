@@ -1,6 +1,7 @@
-import multer, { MulterError } from 'multer';
+const multer = require('multer');
+const { MulterError } = multer;
 
-export default {
+module.exports = {
   fileFilter: (req, file, cb) => {
     if (file.mimetype !== 'text/csv') {
       return cb(new MulterError('LIMIT_INVALID_TYPE'));

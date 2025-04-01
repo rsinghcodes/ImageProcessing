@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-export default async function connect(db) {
+async function connect(db) {
   try {
     await mongoose
       .connect(db)
@@ -10,3 +10,5 @@ export default async function connect(db) {
     throw error;
   }
 }
+
+module.exports = connect;

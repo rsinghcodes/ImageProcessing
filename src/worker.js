@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { Worker } from 'bullmq';
-import path from 'path';
-import sharp from 'sharp';
-import Image from './models/Image';
+const axios = require('axios');
+const { Worker } = require('bullmq');
+const path = require('path');
+const sharp = require('sharp');
+const Image = require('./models/Image');
 
 const redisConnection = {
   connection: { host: 'localhost', port: 6379 },

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const imageSchema = new mongoose.Schema({
   requestId: String,
@@ -8,4 +8,4 @@ const imageSchema = new mongoose.Schema({
   processedImage: String,
 });
 
-export default mongoose.model('Image', imageSchema);
+module.exports = mongoose.model('Image', imageSchema);

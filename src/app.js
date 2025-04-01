@@ -1,6 +1,6 @@
-import express from 'express';
-import path from 'path';
-import routes from './routes';
+const express = require('express');
+const path = require('path');
+const routes = require('./routes');
 
 const app = express();
 
@@ -12,4 +12,4 @@ app.use(
 );
 app.use(routes);
 
-export default app;
+module.exports = app;
