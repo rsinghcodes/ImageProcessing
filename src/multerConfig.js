@@ -2,7 +2,7 @@ import multer, { MulterError } from 'multer';
 
 export default {
   fileFilter: (req, file, cb) => {
-    if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+    if (file.mimetype !== 'text/csv') {
       return cb(new MulterError('LIMIT_INVALID_TYPE'));
     }
 
