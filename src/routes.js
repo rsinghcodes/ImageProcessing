@@ -7,6 +7,7 @@ const { Readable } = require('stream');
 
 const Image = require('./models/Image');
 const multerConfig = require('./multerConfig');
+const JobStatus = require('./constants/jobStatus');
 
 const router = Router();
 const upload = multer(multerConfig);
@@ -30,8 +31,8 @@ router.post('/upload', upload.single('file'), (req, res) => {
         results.push({
           requestId,
           productName: row['Product Name'],
-          imageUrls: row['Input Image Urls'],
-          status: 'pending',
+          imageUrls: row['Input Image Urls'].split(','),
+          status: JobStatus.PENDING,
         });
       })
       .on('end', async () => {
