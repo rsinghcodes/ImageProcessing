@@ -30,7 +30,7 @@ router.post('/upload', upload.single('file'), (req, res) => {
         results.push({
           requestId,
           productName: row['Product Name'],
-          imageUrls: row['Input Image Urls'].split(','),
+          imageUrls: row['Input Image Urls'],
           status: 'pending',
         });
       })

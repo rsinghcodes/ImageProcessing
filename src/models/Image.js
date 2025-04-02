@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const imageSchema = new mongoose.Schema({
   requestId: String,
   productName: String,
-  imageUrls: [String],
+  imageUrls: String,
   status: String,
   processedImage: String,
 });
