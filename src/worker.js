@@ -1,10 +1,12 @@
 require('dotenv').config();
+const fs = require('fs');
 const axios = require('axios');
 const { Worker } = require('bullmq');
 const path = require('path');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 const { parse } = require('json2csv');
+
 const Image = require('./models/Image');
 const connect = require('./db');
 const JobStatus = require('./constants/jobStatus');
@@ -13,18 +15,21 @@ const redisConnection = {
   connection: { host: 'localhost', port: 6379 },
 };
 
-async function generateCSV(imageEntries) {
-  if (imageEntries.length === 0) return;
+// Fetch output image urls and generate a new csv file with new outputUrls column
+async function generateCSV(requestId) {
+  const entries = await Image.find({ requestId, status: JobStatus.COMPLETED });
+  if (entries.length === 0) return;
 
-  // Prepare CSV Data
-  const csvData = imageEntries.map((entry, index) => ({
+  const csvData = entries.map((entry, index) => ({
     SerialNumber: index + 1,
     ProductName: entry._doc.productName,
     InputImageUrls: entry._doc.imageUrls.join(', '),
-    OutputImageUrls: entry._doc.outputUrls.join(', ') || 'Processing Failed',
+    OutputImageUrls:
+      entry._doc.outputUrls.length > 0
+        ? entry._doc.outputUrls.join(', ')
+        : 'Processing Failed',
   }));
 
-  // Convert JSON to CSV format
   const csv = parse(csvData, {
     fields: [
       'SerialNumber',
@@ -34,17 +39,15 @@ async function generateCSV(imageEntries) {
     ],
   });
 
-  // Define Output Path
   const outputDir = path.resolve(__dirname, 'public', 'csv');
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
   const csvFilePath = path.join(outputDir, `${requestId}.csv`);
-
-  // Write to File
   fs.writeFileSync(csvFilePath, csv);
   console.log(`CSV Generated: ${csvFilePath}`);
 }
 
+// connect to database and compress image, save output url in database.
 connect(process.env.DB_URL).then(() => {
   new Worker(
     'image-processing',
@@ -76,7 +79,7 @@ connect(process.env.DB_URL).then(() => {
         );
       }
 
-      await generateCSV(entries);
+      await generateCSV(requestId);
     },
     redisConnection
   );

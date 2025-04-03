@@ -131,3 +131,4 @@ dist
 
 # processed images
 /src/public/images
+/src/public/csv
