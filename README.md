@@ -20,6 +20,10 @@ _Using node version: v22.14.0_
 npm install
 ```
 
+### Create folder in /src
+ - _/public/images_
+ - _/public/csv_
+
 Run the server:
 
 ```bash
