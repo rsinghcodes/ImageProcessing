@@ -42,10 +42,18 @@ POST Upload API
 http://localhost:3000/upload
 ```
 
-form-data
+**form-data**
 |   Key  |     Value    |
 |:-------|:------------:|
 | file   | fileName.csv |
+
+
+**CSV file format**
+|   S.No  |     Product Name    |     Input Image Urls                                                 |
+|:--------|:-------------------:|:--------------------------------------------------------------------:|
+|    1.   |        SKU1         | https://www.public-image-url1.jpg, https://www.public-image-url2.jpg |
+|    2.   |        SKU2         | https://www.public-image-url1.jpg, https://www.public-image-url2.jpg |
+
 
 GET Status API
 
